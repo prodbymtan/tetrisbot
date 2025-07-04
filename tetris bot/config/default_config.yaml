@@ -1,0 +1,152 @@
+# DeepTrix-Z Configuration File
+# The Ultimate Modern Tetris Bot
+
+# Game Configuration
+game:
+  board_width: 10
+  board_height: 20
+  gravity_level: 1
+  soft_drop_speed: 1
+  hard_drop_speed: 20
+  lock_delay: 15
+  line_clear_delay: 6
+  garbage_enabled: true
+  hold_enabled: true
+  next_pieces_count: 5
+  max_level: 20
+
+# AI Configuration
+ai:
+  # MCTS Settings
+  mcts:
+    num_simulations: 800
+    exploration_constant: 1.414
+    time_limit: 0.1  # seconds per move
+    temperature: 1.0
+  
+  # Neural Network Settings
+  neural_network:
+    board_height: 20
+    board_width: 10
+    num_pieces: 7
+    num_actions: 200 # (e.g., 10 columns * 4 rotations * 5 piece types)
+    learning_rate: 0.001
+    optimizer: "Adam"
+    dropout_rate: 0.3
+  
+  # Evaluation Heuristics
+  evaluation:
+    weights:
+      height: -0.51
+      lines_cleared: 0.76
+      holes: -0.36
+      bumpiness: -0.18
+      combo: 0.25
+      t_spin: 1.0
+      attack: 0.5
+      garbage: -0.2
+      survival: 0.1
+      perfect_clear: 10.0
+      b2b: 0.5
+
+# Training Configuration
+training:
+  num_episodes: 10000
+  batch_size: 32
+  gamma: 0.99
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 0.995
+  target_update_freq: 1000
+  save_freq: 100
+  eval_freq: 50
+  max_memory_size: 100000
+  min_memory_size: 1000
+  device: "cpu" # "cpu" or "cuda"
+
+# Finesse Configuration
+finesse:
+  das_delay: 8
+  arr_rate: 1
+  enable_wall_kicks: true
+  enable_180_rotation: true
+
+# Performance Configuration
+performance:
+  target_fps: 60
+  max_decision_time: 0.016  # 16ms for 60 FPS
+  enable_multithreading: true
+  num_threads: 4
+
+# Style Configuration
+style:
+  default_style: "balanced"
+  available_styles:
+    - "balanced"
+    - "diao"
+    - "vincehd"
+    - "czsmall"
+    - "defensive"
+    - "aggressive"
+
+# Aggression Modes
+aggression:
+  spike_mode:
+    enabled: true
+    threshold: 0.7  # Opponent vulnerability threshold
+    min_attack_power: 4
+  
+  cheese_grinder_mode:
+    enabled: true
+    garbage_threshold: 4  # Lines of garbage before activation
+  
+  perfect_clear_mode:
+    enabled: true
+    min_potential: 0.8
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file: "deeptrix.log"
+  console_output: true
+  save_replays: true
+  replay_directory: "replays/"
+
+# Model Configuration
+model:
+  save_directory: "models/"
+  load_latest: true
+  ensemble_size: 3
+  model_format: "pytorch"
+
+# Web Interface Configuration
+web:
+  enabled: false
+  host: "localhost"
+  port: 3000
+  debug: false
+  cors_enabled: true
+
+# Data Collection
+data:
+  save_training_data: true
+  data_directory: "data/"
+  human_games_directory: "data/human_games/"
+  self_play_directory: "data/self_play/"
+  max_data_size: "10GB"
+
+# Advanced Settings
+advanced:
+  enable_cuda: true
+  mixed_precision: false
+  gradient_clipping: 1.0
+  weight_decay: 0.0001
+  scheduler: "cosine"
+  warmup_steps: 1000
+
+# UI Settings
+ui:
+  web_port: 3000
+  replay_speed: 1.0
+  show_finesse_errors: true
+  show_mcts_analysis: false 
